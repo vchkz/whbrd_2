@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, render_template, flash, session, url_for, redirect, abort
+from flask import Flask, request, render_template, redirect
 from datetime import datetime
 
 app = Flask(__name__)
@@ -21,16 +21,46 @@ class Passwords(db.Model):
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.DateTime, default=datetime.utcnow)
+    passw = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
-        return f"<data {self.id}>"
+        return f"{self.passw}, {self.data}"
 
 
 @app.route("/", methods=["GET"])  # Главная
 def main():
-    users = Passwords.query.all()
-    print(users)
-    return render_template("main.html", title="Введите пароль")
+
+    passwords = list(map(lambda x: str(x).split()[:2], Data.query.all()))
+    return render_template("main.html", passwords=passwords)
+
+
+@app.route("/delete-password", methods=["POST"])  # Удаление
+def delete_pasw():
+    password = request.form['delete']
+    Passwords.query.filter(Passwords.psw == password).delete()
+    db.session.commit()
+    return redirect('/')
+
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    data = request.json["password"]
+    arr = Data(passw=data)
+    db.session.add(arr)
+    db.session.commit()
+    if any(list(map(lambda x: x == data, Data.query.all()))):
+        return "open"
+    else:
+        return "invalid password"
+
+
+@app.route("/a", methods=["GET"])
+def a():
+    data = '234832'
+    arr = Data(passw=data)
+    db.session.add(arr)
+    db.session.commit()
+    return 'a'
 
 
 @app.route("/add-password", methods=["POST", "GET"])  # страница добавления нового пароля
@@ -38,11 +68,15 @@ def add_password():
     if request.method == "POST":
         password = request.form['psw']
         arr = Passwords(psw=password)
-        # надо будет сделать проверку на то что парольне пустой и на то что такого пароля ешё нет в бд
-        try:
-            db.session.add(arr)
-            db.session.commit()
-        except:
+        if len(password) == 0:
+            pass
+        if all(list(map(lambda x: str(x) != password, Passwords.query.all()))):
+            try:
+                db.session.add(arr)
+                db.session.commit()
+            except:
+                pass
+        else:
             pass
         return redirect('/')
 

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} главная страница {% endblock %}
+
+{% block body %}
+
+Это главная страница
+<br>
+<a href="/add-password">Добавить новый пароль</a>
+
+{% for password, time in passwords%}
+<br>
+{{password}}
+{{time}}
+
+{% endfor %}
+
+
+
+{% endblock %}
