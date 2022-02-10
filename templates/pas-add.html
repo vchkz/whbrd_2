@@ -1,5 +1,3 @@
-
-
 {% extends 'base.html' %}
 
 {% block title %} Добавить и удалить пароль {% endblock %}
@@ -7,14 +5,17 @@
 {% block body %}
 
 <form method="post" class="form-contact">
-<p><label>Пароль: </label> <input type="password" name="psw" value=""/>
-<p><input type="submit" value="Добавить" />
+    <p><label>Пароль: </label> <input type="password" name="psw" value=""/>
+    <p><input type="submit" value="Добавить"/>
 </form>
 
-(Тут так же будет список всех паролей и конопочка удалить рядом с каждым)
 {%for password in paswords%}
 <br>
 {{password}}
+<form action="/delete-password" method="POST">
+    <input type="hidden" name="delete" value="{{password}}">
+    <input type="submit" class="btn btn-outline-danger" value="Удалить">
+</form>
 
 
 {% endfor %}
