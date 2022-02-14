@@ -29,8 +29,11 @@ class Data(db.Model):
 
 @app.route("/", methods=["GET"])  # Главная
 def main():
-
-    passwords = list(map(lambda x: str(x).split()[:2], Data.query.all()))
+    passwords = []
+    for i in Data.query.all():
+        a, b = str(i).split(', ')
+        passwords.append([a, str(b)[:-16]])
+    print(passwords)
     return render_template("main.html", passwords=passwords)
 
 
