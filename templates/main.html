@@ -17,16 +17,25 @@
 
 
 
-
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Пароль</th>
+      <th scope="col">Дата</th>
+    </tr>
+  </thead>
 {% for password, time in passwords%}
+  <tbody>
+    <tr>
+      <td>{{password}}</td>
+      <td>{{time}}</td>
+    </tr>
+  </tbody>
 <br>
 
-{{password}}
-
-{{time}}
 
 {% endfor %}
 
 
-
 {% endblock %}
+</table>

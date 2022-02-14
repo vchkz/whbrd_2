@@ -18,7 +18,7 @@
 
             </li>
             <li class="nav-item">
-                <input class="btn btn-outline-success" type="submit" value="Добавить"/>
+                <input class="btn btn-outline-success btn-sm" type="submit" value="Добавить"/>
             </li>
 
     </ul>
@@ -26,14 +26,23 @@
 </header>
 
 
+
 {%for password in paswords%}
 
-{{password}}
-<form action="/delete-password" method="POST">
-    <input type="hidden" name="delete" value="{{password}}">
-    <input type="submit" class="btn btn-outline-danger" value="Удалить">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <div class="p-3">{{password}}</div>
+        </div>
 
+        <div class="col-sm">
+            <form action="/delete-password" method="POST">
+            <input type="hidden" name="delete" value="{{password}}">
+            <input type="submit" class="btn btn-outline-danger" value="Удалить">
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endfor %}
 {% endblock %}
