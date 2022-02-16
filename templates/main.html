@@ -5,37 +5,38 @@
 {% block body %}
 
 
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none fs-4">
-            <span class="fs-4">Мониторинг комплекса энергосбережения</span>
-        </a>
+<header class="d-flex flex-wrap justify-content-center py-3 mb-5 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-4 mb-md-0 me-md-auto text-decoration-none fs-5">
+        <span class="fs-3 text-white">Мониторинг комплекса энергосбережения</span>
+    </a>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/add-password" class="btn btn-outline-success">Добавить новый пароль</a></li>
-        </ul>
-    </header>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/add-password" class="btn btn-outline-success">Добавить новый пароль</a></li>
+    </ul>
+</header>
 
 
+<p class="h3 pb-3 text-light">Дверь была открыта:</p>
 
-<table class="table table-bordered">
-  <thead>
+
+<table class="table table-dark table-striped">
+    <thead>
     <tr>
-      <th scope="col">Пароль</th>
-      <th scope="col">Дата</th>
+        <th scope="col">Пароль</th>
+        <th scope="col">Время</th>
     </tr>
-  </thead>
-{% for password, time in passwords%}
-  <tbody>
+    </thead>
+
+    <tbody>
+    {% for password, time in passwords%}
     <tr>
-      <td>{{password}}</td>
-      <td>{{time}}</td>
+        <td>{{password}}</td>
+        <td>{{time}}</td>
     </tr>
-  </tbody>
-<br>
+
+    {% endfor %}
+    {% endblock %}
+    </tbody>
 
 
-{% endfor %}
-
-
-{% endblock %}
 </table>

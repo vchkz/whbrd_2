@@ -32,7 +32,7 @@ def main():
     passwords = []
     for i in Data.query.all():
         a, b = str(i).split(', ')
-        passwords.append([a, str(b)[:-16]])
+        passwords.append([a, str(b)[:-10]])
     print(passwords)
     return render_template("main.html", passwords=passwords)
 
@@ -42,7 +42,7 @@ def delete_pasw():
     password = request.form['delete']
     Passwords.query.filter(Passwords.psw == password).delete()
     db.session.commit()
-    return redirect('/')
+    return redirect('/add-password')
 
 
 @app.route("/upload", methods=["POST"])
@@ -55,15 +55,6 @@ def upload():
         return "open"
     else:
         return "invalid password"
-
-
-@app.route("/a", methods=["GET"])
-def a():
-    data = '234832'
-    arr = Data(passw=data)
-    db.session.add(arr)
-    db.session.commit()
-    return 'a'
 
 
 @app.route("/add-password", methods=["POST", "GET"])  # страница добавления нового пароля
@@ -81,7 +72,7 @@ def add_password():
                 pass
         else:
             pass
-        return redirect('/')
+        return redirect('/add-password')
 
     paswords = Passwords.query.all()
     return render_template('pas-add.html', paswords=paswords)
